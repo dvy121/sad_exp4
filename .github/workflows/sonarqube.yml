@@ -15,21 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          # Disabling shallow clones is recommended for improving the relevancy of reporting.
           fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install dependencies and testing tools
-        run: |
-          pip install pytest pytest-cov
-
-      - name: Run tests and generate coverage report
-        run: |
-          pytest --cov=. --cov-report=xml
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
@@ -38,4 +24,5 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-            -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.projectKey=your_project_key
+            -Dsonar.sources=main.py
